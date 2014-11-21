@@ -10,7 +10,7 @@ window.addEventListener('keydown', function(event) { Key.onKeydown(event); }, fa
 Game.initialize();
 
 // Add some moving rectangles
-var i = 10;
+var i = 1;
 while (i--) Game.addRect();
 
 Game.run = (function() {

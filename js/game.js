@@ -23,13 +23,17 @@ Game.update = function() {
   this.pointsRender.textContent = this.points;
   this.player.update();
   this.player.checkCollision();
-  for (var i=0; i < this.entities.length; i++) {
-    // this.entities[i].update();
-  }
+  // for (var i=0; i < this.entities.length; i++) {
+  //   this.entities[i].update();
+  // }
 };
 
 Game.addRect = function() {
   this.entities.push(new Rect());
+};
+
+Game.increasePoints = function(obj) {
+  this.points += obj.points;
 };
 
 Game.checkCollision = function(a, b) {
@@ -37,4 +41,4 @@ Game.checkCollision = function(a, b) {
   // console.log(b);
   return (Math.abs(a.x - b.x) * 2 < (a.width + b.width)) &&
          (Math.abs(a.y - b.y) * 2 < (a.height + b.height));
-}
+};

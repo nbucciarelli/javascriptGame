@@ -1,12 +1,14 @@
 function Rect() {
   this.x = Math.floor(Math.random() * (640 - 30));
   this.y = Math.floor(Math.random() * (480 - 30));
+  this.width = 30;
+  this.height = 30;
   this.velocity = Math.random() > 0.5 ? -5 : 5;
 }
 
 Rect.prototype.draw = function(context) {
   context.fillStyle = "black";
-  context.fillRect(this.x, this.y, 30, 30);
+  context.fillRect(this.x, this.y, this.width, this.height);
 };
 
 Rect.prototype.update = function() {

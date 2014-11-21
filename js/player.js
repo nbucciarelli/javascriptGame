@@ -2,11 +2,13 @@ function Player() {
   this.x = 0;
   this.y = 0;
   this.velocity = 10;
+  this.width = 30;
+  this.height = 30;
 }
 
 Player.prototype.draw = function(context) {
   context.fillStyle = "red";
-  context.fillRect(this.x, this.y, 30, 30);
+  context.fillRect(this.x, this.y, this.width, this.height);
 };
 
 Player.prototype.update = function() {
@@ -19,19 +21,44 @@ Player.prototype.update = function() {
 Player.prototype.moveDirection = function(direction) {
   switch(direction){
     case "left":
-      this.x -= this.velocity;
+      if(!(this.x <= 0)){  
+        this.x -= this.velocity;
+      }
       break;
     case "right":
-      this.x += this.velocity;
+      if(!(this.x>= Game.width - this.width)){
+        this.x += this.velocity;
+      }
       break;
     case "up":
-      this.y -= this.velocity;
+      if(!(this.y<=0)){
+        this.y -= this.velocity;
+      }
       break;
     case "down":
-      this.y += this.velocity;
+      if(!(this.y>=Game.height-this.height)){
+        this.y += this.velocity;
+      }
+
       break;
   }
 };
+
+Player.prototype.checkCollision = function() {
+  var context = this;
+  var deleteThese = []
+  _.each(Game.entities, function(entity, index) {
+    if( Game.checkCollision(context, entity) ){
+      deleteThese.push(index);
+    }
+  })
+  if(deleteThese.length > 0){
+    _.each(deleteThese, function(el) {
+      Game.entities.splice(el, 1);
+    });
+  }
+
+}
 
 
 

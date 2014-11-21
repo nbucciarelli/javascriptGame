@@ -1,4 +1,4 @@
-http://nokarma.org/
+http://nokarma.org/ - Game loop guide
 
 - Pull down repository
 - npm install

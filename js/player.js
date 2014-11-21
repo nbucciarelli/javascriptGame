@@ -1,18 +1,26 @@
 function Player() {
-  this.x = 0;
-  this.y = 0;
-  this.velocity = 10;
+  this.x = 300;
+  this.y = 450;
+  this.previousX = 300;
+  this.previousY = 450;
+  this.velocity = 5;
   this.width = 30;
   this.height = 30;
   this.direction = "up";
+  this.train = [];
 }
 
 Player.prototype.draw = function(context) {
   context.fillStyle = "red";
   context.fillRect(this.x, this.y, this.width, this.height);
+  _.each(this.train, function(trainEl) {
+    trainEl.draw(context);
+  });
 };
 
 Player.prototype.update = function() {
+  this.previousX = this.x;
+  this.previousY = this.y;
   if (Key.isDown(Key.UP) && this.direction != "down") this.changeDirection("up");
   if (Key.isDown(Key.LEFT) && this.direction != "right") this.changeDirection("left");
   if (Key.isDown(Key.DOWN) && this.direction != "up") this.changeDirection("down");
@@ -27,9 +35,11 @@ Player.prototype.update = function() {
 
 Player.prototype.changeDirection = function(direction) {
   this.direction = direction;
-}
+};
 
 Player.prototype.moveDirection = function(direction) {
+  this.previousX = this.x;
+  this.previousY = this.y;
   switch(direction){
     case "left":
       if(!(this.x <= 0)){  
@@ -50,9 +60,12 @@ Player.prototype.moveDirection = function(direction) {
       if(!(this.y>=Game.height-this.height)){
         this.y += this.velocity;
       }
-
       break;
   }
+};
+
+Player.prototype.increaseVelocity = function() {
+  this.velocity += 2;
 };
 
 Player.prototype.checkCollision = function() {
@@ -63,6 +76,7 @@ Player.prototype.checkCollision = function() {
       Game.increasePoints(entity);
       deleteThese.push(index);
       Game.addRect();
+      context.addToTrain();
     }
   });
   if(deleteThese.length > 0){
@@ -72,5 +86,22 @@ Player.prototype.checkCollision = function() {
   }
 };
 
+Player.prototype.addToTrain = function() {
+  this.train.push(new Train());
+};
 
+Player.prototype.updateTrain = function() {
+  var context = this;
+  // console.log(this.train);
+  _.each(this.train, function(trainEl, index){
+    var previousTrain = null;
+    if(index == 0){
+      previousTrain = context;
+    }
+    else {
+      previousTrain = context.train[index-1];
+    }
+    trainEl.update(previousTrain);
+  });
+};
 

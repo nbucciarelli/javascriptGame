@@ -23,6 +23,7 @@ Game.update = function() {
   this.pointsRender.textContent = this.points;
   this.player.update();
   this.player.checkCollision();
+  this.player.updateTrain();
   // for (var i=0; i < this.entities.length; i++) {
   //   this.entities[i].update();
   // }
@@ -34,6 +35,10 @@ Game.addRect = function() {
 
 Game.increasePoints = function(obj) {
   this.points += obj.points;
+  if(this.points%100===0){
+    this.player.increaseVelocity();
+  }
+  return this.points;
 };
 
 Game.checkCollision = function(a, b) {

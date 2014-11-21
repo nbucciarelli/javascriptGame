@@ -4,7 +4,7 @@ function Rect() {
   this.width = 30;
   this.height = 30;
   this.velocity = Math.random() > 0.5 ? -5 : 5;
-  this.points = 15;
+  this.points = 10;
 }
 
 Rect.prototype.draw = function(context) {
